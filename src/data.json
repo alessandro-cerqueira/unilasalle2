@@ -1,0 +1,5 @@
+{
+  "database": "sqlite.js",
+  "msgErro": "Erro na conexão com o banco. Por favor, tente novamente.",
+  "msgSetup": "🚧 Ops! Parece que o banco de dados não rodou seu setup 🚧"
+}

@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <link rel="icon" href="https://glitch.com/favicon.ico" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <title>Alô SQLite: Logs</title>
+  <link rel="stylesheet" href="/style.css" />
+</head>
+
+<body>
+  <div class="wrapper">
+    <div class="content" role="main">
+      <h1>Logs</h1>
+      {{#if error}}
+      <p class="error">
+        {{error}}
+      </p>
+      {{else}}
+
+      <!-- O script do servidor irá retornar os logs no array  -->
+      <p>
+        Cada vez que você submete um voto na <a href="/">Home Page</a>, a aplicação irá também adicionar um log. <em>Apresentando os registros mais recentes (max 30).</em>
+      </p>
+      <!-- Write out a table row for each entry in the log array showing choice and timestamp -->
+      {{#if logs.length}}
+          <div>
+            <h2>Histórico da Votação</h2>
+            <table>
+              <tr>
+                <th>Option Name</th>
+                <th>Timestamp</th>
+              </tr>
+              {{#each logs}}
+                <tr>
+                  <td>{{voto}}</td>
+                  <td>{{hora}}</td>
+                </tr>
+              {{/each}}
+            </table>
+          </div>
+      {{else}}
+      <p class="error">
+        Sem registros!
+      </p>
+      {{/if}}
+
+      <!-- O usuário pode limpar a lista de logs se ele primeiramente determinar a ADMIN_KEY presente no .env-->
+      <form action="/reset" method="post">
+        <h2>
+          Limpando o histórico da votação
+        </h2>
+        <p>
+          Limpe o histórico de votação somente se você estiver absolutamente seguro disso, pois
+          esta ação não poderá ser desfeita.
+          <em>(Leita o README para instruções na configuração da ADMIN_KEY.)</em>
+        </p>
+        <p>
+          Entre com a ADMIN_KEY para confirmar:
+        </p>
+        
+        <!-- O Servidor retorna a flag falha se a chave submetida não estiver correta -->
+        {{#if falha}}
+        <p class="error">
+          {{falha}}
+        </p>
+        {{/if}}
+        <input type="password" id="pass" name="key" required>
+        <button type="submit">Clear log history</button>
+      </form>
+      {{/if}}
+    </div>
+  </div>
+  <!-- A área footer armazena o botão remix — você pode usá-lo ou retirá-lo se quiser ✂ -->
+  <footer class="footer">
+    <div class="links"></div>
+    <a href="/">Home</a>
+    <span class="divider">|</span>
+    <a href="/logs">Admin</a>
+    <a class="btn--remix" target="_top" href="https://glitch.com/edit/#!/remix/glitch-hello-sqlite">
+      <img src="https://cdn.glitch.com/605e2a51-d45f-4d87-a285-9410ad350515%2FLogo_Color.svg?v=1618199565140"
+        alt="" />
+      Remix on Glitch
+    </a>
+  </footer>
+</body>
+
+</html>
